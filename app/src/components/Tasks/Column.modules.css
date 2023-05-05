@@ -1,18 +1,19 @@
 .column {
-  max-width: 400px;
   width: 100%;
+  min-width: 280px;
+  height: fit-content;
   border-radius: 8px;
   border: 1px solid #ced0da;
+  background: #fff;
   overflow: hidden;
 }
 
 .header-column {
-  height: 44px;
   color: #fff;
   padding: 10px;
 }
 
-.header-column span{
+.header-column span {
   color: #fff;
 }
 
@@ -41,6 +42,23 @@
 .tasks-list {
   display: flex;
   flex-direction: column;
-  padding: 10px 5px;
+  padding: 10px 5px 5px;
   gap: 10px;
 }
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-btn.ant-btn-lg.add-board-btn {
+  color: #8e96da;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-btn-text:not(
+    :disabled
+  ).add-board-btn:hover {
+  color: #4276c3;
+  background: #e0ecff;
+}
+
+.add-task-btn {
+  text-align: left;
+  color: #ced0da;
+}
+

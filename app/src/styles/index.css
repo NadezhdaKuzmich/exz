@@ -31,8 +31,7 @@
   display: flex;
   width: 100%;
   justify-content: center;
-  background: #fff;
-  border: 1px solid #e2e7fe;
+  background: #f5f7ff;
   border-top: none;
   padding: 20px;
   gap: 20px;
@@ -85,4 +84,21 @@
 
 :where(.css-dev-only-do-not-override-yp8pcc) a {
   color: #6875d8;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-modal .ant-modal-title {
+  color: #565c8e;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-input,
+:where(.css-dev-only-do-not-override-yp8pcc).ant-picker
+  .ant-picker-input
+  > input {
+  color: #686c92;
+}
+
+@media screen and (max-width: 960px) {
+  button {
+    display: block;
+  }
 }

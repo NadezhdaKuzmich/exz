@@ -1,6 +1,8 @@
 .card-task {
   border-radius: 8px;
   padding: 14px 18px 10px;
+  transform: translate(0, 0);
+  cursor: pointer;  
 }
 
 .task-todo {
@@ -59,15 +61,12 @@
   float: right;
 }
 
-.btn-details {
-  font-size: 10px;
-  color: #7785e3;
+:where(.css-dev-only-do-not-override-yp8pcc).ant-btn.ant-btn-sm.btn-details {
+  font-size: 12px;
+  color: #565c8ea8;
+  padding: 0;
 }
 
 .btn-details span:hover {
   color: #a6aee0;
-}
-
-.btn-details span:active {
-  color: #5661a7;
 }

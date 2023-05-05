@@ -73,7 +73,7 @@ const DetailsTask = ({ id, title, date, description, status, limit }) => {
             <span className="date">{date}</span>
           </Descriptions.Item>
           <Descriptions.Item
-            label="Limit of time"
+            label="Deadline"
             labelStyle={{ color: "#6f738c" }}
           >
             <span className="date">{limit}</span>

@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { initialValue } from "./initialValue";
 import { nanoid } from "@reduxjs/toolkit";
 
 const BoardsSlice = createSlice({
   name: "boards",
-  initialState: {
-    boards: [],
-  },
-
+  initialState: initialValue,
   reducers: {
     addBoard: (state, action) => {
       const isActive = state.length > 0 ? false : true;

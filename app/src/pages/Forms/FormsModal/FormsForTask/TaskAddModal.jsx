@@ -1,16 +1,22 @@
 import { useSelector, useDispatch } from "react-redux";
 import { toggleModal } from "../../../../slices/ModalSlice";
 import { addTask } from "../../../../slices/BoardsSlice";
-import { InitialValue } from "./InitialValue";
+// import { InitialValue } from "./InitialValue";
 import { Modal, Form, Input, DatePicker } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 const { TextArea } = Input;
 
-const TaskAddModal = () => {
+const TaskAddModal = ({ column }) => {
   const { isOpenAddTask } = useSelector((store) => store.modal);
+  const InitialValue = {
+    title: "",
+    description: "",
+    timeLimit: "",
+  };
+
   const [state, setState] = useState(InitialValue);
-  const { title, description, status, timeLimit } = state;
+  const { title, description, timeLimit } = state;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -35,7 +41,7 @@ const TaskAddModal = () => {
       addTask({
         title: title,
         description: description,
-        status: status,
+        status: column,
         timeLimit: timeLimit,
       })
     );

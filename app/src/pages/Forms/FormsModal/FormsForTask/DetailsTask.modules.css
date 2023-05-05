@@ -13,6 +13,12 @@
 }
 
 .descript {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: justify;
+  overflow: hidden;
   color: #6b7590;
 }
 

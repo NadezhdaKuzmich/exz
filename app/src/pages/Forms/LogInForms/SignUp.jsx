@@ -8,9 +8,9 @@ import { Button, Form, Input, Avatar } from "antd";
 import "./Forms.modules.css";
 
 const SignUp = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
+  // const onFinish = (values) => {
+  //   console.log("Received values of form: ", values);
+  // };
 
   return (
     <div className="form-container sign-up">

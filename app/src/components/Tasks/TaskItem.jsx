@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import { AlignRightOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { toggleModal } from "../../slices/ModalSlice";
 import "./TaskItem.modules.css";
@@ -24,7 +25,11 @@ const TaskItem = ({ colId, taskIndex, handleDetails }) => {
   };
 
   return (
-    <div className={`card-task task-${column.name.split(" ").join("")}`} draggable onDragStart={handleOnDrag}>
+    <div
+      className={`card-task task-${column.name.split(" ").join("")}`}
+      draggable
+      onDragStart={handleOnDrag}
+    >
       <div className="title-card-task">
         <h4>{task.title}</h4>
         <span className="time">{task.date}</span>
@@ -39,7 +44,10 @@ const TaskItem = ({ colId, taskIndex, handleDetails }) => {
           className="btn-details"
           onClick={handleOpen}
         >
-          Show more
+          <span>
+            Show more
+            <AlignRightOutlined style={{ padding: "0 0 0 6px"}}/>
+          </span>
         </Button>
       </div>
     </div>

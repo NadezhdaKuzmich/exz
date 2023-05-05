@@ -4,15 +4,21 @@ import {
   LoadingOutlined,
   CarryOutOutlined,
   PlusOutlined,
+  SearchOutlined,
+  CalendarOutlined,
 } from "@ant-design/icons";
-import { Button, Tooltip, Badge } from "antd";
-import TaskAddModal from "../../pages/Forms/FormsModal/FormsForTask/TaskAddModal";
+import { Button, Tooltip, Badge, Input, DatePicker } from "antd";
 import TaskItem from "./TaskItem";
 import "./Column.modules.css";
 import { dragTask } from "../../slices/BoardsSlice";
 import { toggleModal } from "../../slices/ModalSlice";
+import { useState } from "react";
+const { RangePicker } = DatePicker;
+const { Search } = Input;
 
-const Column = ({ colId, handleDetails }) => {
+const Column = ({ colId, handleDetails, handleAddTask }) => {
+  const [search, setSearch] = useState();
+  const [searchCol, setSearchCol] = useState();
   const { boards } = useSelector((state) => state.boards);
   const board = boards.find((board) => board.isActive === true);
   const column = board.columns.find((column, i) => i === colId);
@@ -23,27 +29,30 @@ const Column = ({ colId, handleDetails }) => {
       case "todo": {
         return (
           <div className="done-title">
-            <span>
-              <Badge
-                count={column.tasks.length}
-                offset={[12, 0]}
-                color="#7785e4"
-              >
-                <PushpinOutlined className="icon-column" />
-                {column.name}
-              </Badge>
-            </span>
-            <Tooltip placement="right" title="Add new task" color="#8fa5eb">
+            <Badge count={column.tasks.length} offset={[12, 0]} color="#7785e4">
+              <PushpinOutlined className="icon-column" />
+              {column.name}
+            </Badge>
+            <div>
               <Button
-                type="primary"
+                id={column.id}
+                type="link"
+                shape="circle"
                 size="small"
-                className="form-button"
-                icon={<PlusOutlined />}
-                onClick={() =>
-                  dispatch(toggleModal({ modal: "isOpenAddTask" }))
-                }
+                name="word"
+                icon={<SearchOutlined />}
+                onClick={chooseSearch}
               />
-            </Tooltip>
+              <Button
+                id={column.id}
+                type="link"
+                shape="circle"
+                size="small"
+                name="date"
+                icon={<CalendarOutlined />}
+                onClick={chooseSearch}
+              />
+            </div>
           </div>
         );
       }
@@ -72,15 +81,28 @@ const Column = ({ colId, handleDetails }) => {
     }
   };
 
+  const chooseSearch = (e) => {
+    if (search === e.currentTarget.name) {
+      setSearch(false);
+    } else {
+      setSearch(e.currentTarget.name);
+      setSearchCol(e.currentTarget.id);
+    }
+  };
+
+  const handleAdd = (e) => {
+    handleAddTask(e.currentTarget.id);
+    dispatch(toggleModal({ modal: "isOpenAddTask" }));
+  };
+
   const handleOnDrop = (e) => {
-    const { prevColIndex, taskIndex } = JSON.parse(
+    const { prevColIndex, prevTaskIndex, taskIndex } = JSON.parse(
       e.dataTransfer.getData("text")
     );
 
-    if (colId !== prevColIndex) {
+    if (colId !== prevColIndex || taskIndex !== prevTaskIndex) {
       dispatch(dragTask({ colId, prevColIndex, taskIndex }));
     }
-    console.log("kkk");
   };
 
   const handleOnDragOver = (e) => {
@@ -93,6 +115,13 @@ const Column = ({ colId, handleDetails }) => {
         {headerColumn(column.name)}
       </div>
       <div className="tasks-list">
+        {searchCol === column.id ? (
+          search === "word" ? (
+            <Search placeholder="input search text" style={{ width: "100%" }} />
+          ) : search === "date" ? (
+            <RangePicker />
+          ) : null
+        ) : null}
         {column.tasks.map((task, index) => (
           <TaskItem
             key={index}
@@ -102,8 +131,23 @@ const Column = ({ colId, handleDetails }) => {
             handleDetails={handleDetails}
           />
         ))}
+        <Tooltip
+          placement="right"
+          title="Add new task"
+          color="#fff"
+          overlayInnerStyle={{ color: "#8fa5eb" }}
+        >
+          <Button
+            type="text"
+            className="add-task-btn"
+            icon={<PlusOutlined />}
+            id={column.name}
+            onClick={handleAdd}
+          >
+            Add new task...
+          </Button>
+        </Tooltip>
       </div>
-      <TaskAddModal />
     </div>
   );
 };

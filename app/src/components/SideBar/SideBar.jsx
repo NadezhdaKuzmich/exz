@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Tooltip } from "antd";
-import { ProjectOutlined } from "@ant-design/icons";
+import { ProjectOutlined, AppstoreAddOutlined } from "@ant-design/icons";
 import BoardModal from "../../pages/Forms/FormsModal/FormsForBoard/BoardModal";
 import BoardModalEdit from "../../pages/Forms/FormsModal/FormsForBoard/BoardModalEdit";
 import DropdDownBoard from "./DropDownBoard";
@@ -11,12 +11,12 @@ import { useState } from "react";
 
 const SideBar = () => {
   const { boards } = useSelector((store) => store.boards);
-  const [ name, setName ] = useState();
+  const [name, setName] = useState();
   const dispatch = useDispatch();
 
-  const handleEdit = ( board ) => {
+  const handleEdit = (board) => {
     setName(board);
-  }
+  };
 
   return (
     <div className="sidebar">
@@ -27,12 +27,10 @@ const SideBar = () => {
           className={`board-btn ${board.isActive ? "active" : ""}`}
           onClick={() => dispatch(setBoardActive({ index }))}
         >
-          <p>
-            <ProjectOutlined
-              className="icon-board"
-            />
+          <span>
+            <ProjectOutlined className="icon-board" />
             {board.name}
-          </p>
+          </span>
           <DropdDownBoard id={board.id} handleEdit={handleEdit} />
         </div>
       ))}
@@ -40,15 +38,17 @@ const SideBar = () => {
         placement="right"
         size="large"
         title="Add new board"
-        color="#8fa5eb"
+        color="#fff"
+        overlayInnerStyle={{ color: "#8fa5eb" }}
       >
         <Button
-          type="primary"
-          className="form-button"
+          type="text"
+          className="add-board-btn"
           size="large"
+          icon={<AppstoreAddOutlined />}
           onClick={() => dispatch(toggleModal({ modal: "isOpenAddBoard" }))}
         >
-          + Add New Board
+          Add new board
         </Button>
       </Tooltip>
 

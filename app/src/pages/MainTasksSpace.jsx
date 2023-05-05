@@ -2,6 +2,7 @@ import { useSelector} from "react-redux";
 import { useState } from "react";
 import SideBar from "../components/SideBar/SideBar";
 import Column from "../components/Tasks/Column";
+import TaskAddModal from "./Forms/FormsModal/FormsForTask/TaskAddModal";
 import DetailsTask from "./Forms/FormsModal/FormsForTask/DetailsTask";
 import TaskAEditModal from "./Forms/FormsModal/FormsForTask/TaskEditModal";
 import EmptyComponent from "../components/Empty/EmptyComponent";
@@ -11,6 +12,11 @@ const MainTasksSpace = () => {
   const board = boards.find((board) => board.isActive === true);
   const columns = board ? board.columns : [];
   const [ state, setState ] = useState();
+  const [ status, setStatus ] = useState();
+
+  const handleAddTask = (name) => {
+    setStatus(name);
+  }
 
   const handleDetails = (task) => {
     setState(task);
@@ -33,7 +39,7 @@ const MainTasksSpace = () => {
           {boards.length > 0 ? (
             <>
               {columns.map((column, index) => (
-                <Column key={index} colId={index}  handleDetails={handleDetails} />
+                <Column key={index} colId={index}  handleDetails={handleDetails} handleAddTask={handleAddTask} col={status}/>
               ))}
             </>
           ) : (
@@ -41,6 +47,7 @@ const MainTasksSpace = () => {
           )}
         </div>
       </div>
+      <TaskAddModal column={status} />
       <DetailsTask {...state} />
       <TaskAEditModal {...state } handleChange={handleChange} handleDataSet={handleDataSet} />
     </div>

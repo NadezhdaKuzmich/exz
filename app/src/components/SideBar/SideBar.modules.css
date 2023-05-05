@@ -1,10 +1,11 @@
 .sidebar {
   display: flex;
-  width: 200px;
   flex-direction: column;
   align-items: center;
+  width: 200px;
+  min-height: 60vw;
   padding: 30px 20px 30px 0;
-  height: 1000px;
+  gap: 8px;
 }
 
 .sidebar-count {
@@ -12,7 +13,6 @@
   font-size: 16px;
   font-weight: 600;
   color: #9995e1;
-  padding: 0 0 10px;
 }
 
 .board-btn {
@@ -21,11 +21,11 @@
   justify-content: space-between;
   width: 100%;
   overflow: hidden;
-  color: #ffffff;
-  background: #b9c0fd;
+  color: #9a95e2;
+  border: 1px solid #e3e3e3;
+  background: #ffffff;
   border-radius: 8px;
-  padding: 10px 8px;
-  margin: 0 0 10px;
+  padding: 10px 8px 10px 16px;
   cursor: pointer;
 }
 
@@ -39,19 +39,21 @@
 }
 
 .icon-board {
-  color: #fff;
+  color: #9a95e2;
   margin-right: 5px;
 }
 
-.active {
-  color: #fff;
-  background: #7785e4;
-}
-
 .btn-name-board {
-  color: #fff;
+  color: #9a95e2;
 }
 
 .btn-name-board:hover {
   color: #fff;
+}
+
+.active,
+.active .icon-board,
+.active .btn-name-board {
+  color: #fff;
+  background: #a7a4f5;
 }

@@ -46,7 +46,7 @@ const DropdDownBoard = ({ id, handleEdit }) => {
       <Button
         size="small"
         shape="circle"
-        type="text"
+        type="link"
         id={id}
         icon={<MoreOutlined className="btn-name-board" />}
       />
