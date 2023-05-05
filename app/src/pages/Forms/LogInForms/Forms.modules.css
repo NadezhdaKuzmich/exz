@@ -1,0 +1,31 @@
+.form-container {
+  max-width: 500px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 1px 4px 8px #777a9b;
+  padding: 60px 40px;
+  margin: 60px auto;
+}
+
+.form-container h2 {
+  margin: 0px 0 10px;
+}
+
+.login-form {
+  text-align: left;
+  padding: 30px 0 16px;
+}
+
+.form-button {
+  background: #6875d8;
+  width: 100%;
+}
+
+.site-form-item-icon {
+  color: #9193a8;
+  margin-inline-end: 6px;
+}
+
+.sign-up {
+  padding: 50px 34px;
+}

@@ -1,0 +1,57 @@
+.sidebar {
+  display: flex;
+  width: 200px;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px 30px 0;
+  height: 1000px;
+}
+
+.sidebar-count {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #9995e1;
+  padding: 0 0 10px;
+}
+
+.board-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  overflow: hidden;
+  color: #ffffff;
+  background: #b9c0fd;
+  border-radius: 8px;
+  padding: 10px 8px;
+  margin: 0 0 10px;
+  cursor: pointer;
+}
+
+.board-btn p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon-board {
+  color: #fff;
+  margin-right: 5px;
+}
+
+.active {
+  color: #fff;
+  background: #7785e4;
+}
+
+.btn-name-board {
+  color: #fff;
+}
+
+.btn-name-board:hover {
+  color: #fff;
+}

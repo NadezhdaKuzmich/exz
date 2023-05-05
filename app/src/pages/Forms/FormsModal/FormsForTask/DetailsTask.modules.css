@@ -1,0 +1,34 @@
+.title-modal {
+  font-size: 18px;
+  color: #444975;
+}
+
+.title-description {
+  color: #565c8e;
+}
+
+.date {
+  font-size: 12px;
+  color: #6c6f85;
+}
+
+.descript {
+  color: #6b7590;
+}
+
+.footer-modal-task {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 5px 0 0;
+  gap: 4px;
+}
+
+.edit-modal-btn {
+  color: #649bf0;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-btn-text:not(:disabled):hover {
+  color: #4276c3;
+  background: #f0f5ff;
+}

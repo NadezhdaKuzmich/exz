@@ -1,0 +1,73 @@
+.card-task {
+  border-radius: 8px;
+  padding: 14px 18px 10px;
+}
+
+.task-todo {
+  background: #e7ecff;
+}
+
+.task-inprogress {
+  background: #e0ecff;
+}
+
+.task-done {
+  background: #ddfaf2;
+}
+
+.title-card-task {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 12px;
+  gap: 4px;
+}
+
+.title-card-task h4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #565c8e;
+}
+
+.time {
+  font-size: 10px;
+  color: #8f8daa;
+}
+
+.description {
+  display: block;
+  font-size: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.description p {
+  color: #6b7590;
+  word-wrap: break-word;
+}
+
+.footer-card-task {
+  padding: 10px 0 0;
+  float: right;
+}
+
+.btn-details {
+  font-size: 10px;
+  color: #7785e3;
+}
+
+.btn-details span:hover {
+  color: #a6aee0;
+}
+
+.btn-details span:active {
+  color: #5661a7;
+}

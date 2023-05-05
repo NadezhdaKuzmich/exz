@@ -1,0 +1,46 @@
+.column {
+  max-width: 400px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ced0da;
+  overflow: hidden;
+}
+
+.header-column {
+  height: 44px;
+  color: #fff;
+  padding: 10px;
+}
+
+.header-column span{
+  color: #fff;
+}
+
+.todo {
+  background: #bec4f6;
+}
+
+.inprogress {
+  background: #b7d0f8;
+}
+
+.done {
+  background: #ace2d2;
+}
+
+.done-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-column {
+  margin-right: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 5px;
+  gap: 10px;
+}

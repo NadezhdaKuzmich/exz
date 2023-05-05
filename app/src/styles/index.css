@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "PT Sans", sans-serif;
+}
+
+.container {
+  max-width: 1310px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.empty-container {
+  padding: 80px 0;
+}
+
+.btn-st {
+  background: #6875d8;
+}
+
+.work-space {
+  background: #ecf1ff87;
+}
+
+.wrap-boards {
+  display: flex;
+}
+
+.board-space {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #e2e7fe;
+  border-top: none;
+  padding: 20px;
+  gap: 20px;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-btn-primary:not(
+    :disabled
+  ):hover {
+  background: #8b97f1;
+}
+
+.form-task {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-form-item {
+  margin-bottom: 16px;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-btn-primary {
+  background: #6875d8;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-picker-dropdown
+  .ant-picker-cell-in-view.ant-picker-cell-selected
+  .ant-picker-cell-inner,
+:where(.css-dev-only-do-not-override-yp8pcc).ant-picker-dropdown
+  .ant-picker-cell-in-view.ant-picker-cell-range-start
+  .ant-picker-cell-inner,
+:where(.css-dev-only-do-not-override-yp8pcc).ant-picker-dropdown
+  .ant-picker-cell-in-view.ant-picker-cell-range-end
+  .ant-picker-cell-inner {
+  background: #6875d8;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-picker-dropdown
+  .ant-picker-cell-in-view.ant-picker-cell-today
+  .ant-picker-cell-inner::before {
+  border: 1px solid #6875d8;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-picker-dropdown
+  .ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell-selected
+  .ant-picker-time-panel-cell-inner {
+  background: #e9e6ff;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc) a {
+  color: #6875d8;
+}
