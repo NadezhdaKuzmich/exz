@@ -25,14 +25,14 @@ const TaskItem = ({ colId, taskIndex, handleDetails }) => {
   };
 
   return (
-    <div
+    <li
       className={`card-task task-${column.name.split(" ").join("")}`}
       draggable
       onDragStart={handleOnDrag}
     >
       <div className="title-card-task">
         <h4>{task.title}</h4>
-        <span className="time">{task.date}</span>
+        <span className="time">{new Date(task.date).toLocaleString()}</span>
       </div>
       <div className="description">
         <p>{task.description}</p>
@@ -50,7 +50,7 @@ const TaskItem = ({ colId, taskIndex, handleDetails }) => {
           </span>
         </Button>
       </div>
-    </div>
+    </li>
   );
 };
 

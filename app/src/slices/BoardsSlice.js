@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice,current } from "@reduxjs/toolkit";
 import { initialValue } from "./initialValue";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -17,6 +17,7 @@ const BoardsSlice = createSlice({
           { name: "todo", tasks: [], id: nanoid() },
           { name: "in progress", tasks: [], id: nanoid() },
           { name: "done", tasks: [], id: nanoid() },
+          { name: "overdue", tasks: [], id: nanoid() },
         ],
       };
       state.boards.push(board);
@@ -43,30 +44,27 @@ const BoardsSlice = createSlice({
     },
 
     addTask: (state, action) => {
-      const { title, description, status, timeLimit } = action.payload;
+      const { title, description, statusName, timeLimit } = action.payload;
+      let status = statusName;
       const id = nanoid();
-      const date = new Date().toLocaleString();
-      const limit = new Date(timeLimit).toLocaleString();
-      const task = { id, title, date, description, status, limit };
+      const date = new Date().toString();
+      const limit = new Date(timeLimit).toString();
+      const visible = true;
+      if (Date.parse(limit) < new Date()) {
+        status = "overdue";
+      } 
+      const task = { id, title, date, description, status, limit, visible };
       const board = state.boards.find((board) => board.isActive);
       const column = board.columns.find((column) => column.name === status);
       column.tasks.push(task);
     },
 
     editTask: (state, action) => {
-      const {
-        id,
-        title,
-        status,
-        description,
-        limit
-      } = action.payload;
-
+      const { id, title, status, description, limit } = action.payload;
       const board = state.boards.find((board) => board.isActive);
       const column = board.columns.find((column) => column.name === status);
       const task = column.tasks.find((task) => task.id === id);
       task.title = title;
-      // task.status = status;
       task.description = description;
       task.limit = limit;
       // if (prevColIndex === newColIndex) return;
@@ -83,6 +81,18 @@ const BoardsSlice = createSlice({
       const newColumn = board.columns.find((col, i) => i === colId);
       task.status = newColumn.name;
       newColumn.tasks.push(task);
+    },
+
+    findOverdueTask: (state, action) => {
+      const { filtered } = action.payload;
+      const board = state.boards.find((board) => board.isActive);
+      const overdueCol = board.columns.find((column) => column.name === "overdue");
+      filtered.forEach((task) => {
+        const column = board.columns.find((column) => column.id === task.column);
+        const taskOverdue = column.tasks.splice(task.taskIndex, 1)[0];
+        taskOverdue.status = "overdue";
+        overdueCol.tasks.push(taskOverdue);
+      })
     },
 
     setTaskStatus: (state, action) => {
@@ -104,9 +114,48 @@ const BoardsSlice = createSlice({
       const column = board.columns.find((column) => column.name === status);
       column.tasks = column.tasks.filter((task) => task.id !== id);
     },
+
+    searchTask: (state, action) => {
+      const { searchCol, titleSearch } = action.payload;
+      const board = state.boards.find((board) => board.isActive);
+      const col = board.columns.find((column) => column.id === searchCol);
+      const filtered = col.tasks.map((task) =>
+        task.title.toLowerCase().includes(titleSearch.toLowerCase())
+          ? { ...task, visible: true }
+          : { ...task, visible: false }
+      );
+      col.tasks = filtered;
+    },
+
+    rangeDateTask: (state, action) => {
+      const { searchCol, startDate, endDate } = action.payload;
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const board = state.boards.find((board) => board.isActive);
+      const col = board.columns.find((column) => column.id === searchCol);
+      console.log(start, end);
+      const filtered = col.tasks.map((task) =>
+        (new Date(task.date) >= start && new Date(task.date) <= end) ||
+        new Date(task.date).toLocaleDateString() === start.toLocaleDateString()
+          ? { ...task, visible: true }
+          : { ...task, visible: false }
+      );
+      col.tasks = filtered;
+    },
   },
 });
 
-export const { addBoard, editBoard, deleteBoard, setBoardActive, addTask, editTask, deleteTask, dragTask } =
-  BoardsSlice.actions;
+export const {
+  addBoard,
+  editBoard,
+  deleteBoard,
+  setBoardActive,
+  addTask,
+  editTask,
+  deleteTask,
+  dragTask,
+  findOverdueTask,
+  searchTask,
+  rangeDateTask,
+} = BoardsSlice.actions;
 export default BoardsSlice.reducer;

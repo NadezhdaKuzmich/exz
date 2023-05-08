@@ -1,13 +1,9 @@
-header {
-  background: linear-gradient(45deg, #9890e3, #b1f4cf);
-}
-
 .navbar-user {
   height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 30px;
+  padding: 0;
   font-size: 1.2rem;
 }
 
@@ -28,4 +24,27 @@ header {
 
 .drop-btn {
   margin-left: 8px;
+}
+
+.nav-user-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.add-board {
+  color: #fff;
+  background: #b1ace245;
+  backdrop-filter: blur(8px);
+  background-origin: border-box;
+}
+
+.nav-bar-bredcumb{
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-avatar-lg.ant-avatar-icon {
+  font-size: 18px;
 }

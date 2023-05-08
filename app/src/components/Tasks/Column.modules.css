@@ -1,11 +1,16 @@
 .column {
-  width: 100%;
-  min-width: 280px;
+  /* min-width: 100%; */
+  /* width: 30%; */
   height: fit-content;
   border-radius: 8px;
   border: 1px solid #ced0da;
-  background: #fff;
+  backdrop-filter: blur(16px);
+  background: #ffffffde;
   overflow: hidden;
+}
+
+.overdue-column {
+  background: #ffffff73;
 }
 
 .header-column {
@@ -29,7 +34,11 @@
   background: #ace2d2;
 }
 
-.done-title {
+.overdue {
+  background: #ffa2a2bd;
+}
+
+.title {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -39,10 +48,20 @@
   margin-right: 8px;
 }
 
-.tasks-list {
+.task-list-box {
   display: flex;
   flex-direction: column;
-  padding: 10px 5px 5px;
+}
+
+.task-list-wrap {
+  padding: 10px 5px 8px;
+}
+
+.tasks-list {
+  display: flex;
+  min-height: 132px;
+  flex-direction: column;
+  padding: 0 0 8px;
   gap: 10px;
 }
 
@@ -62,3 +81,10 @@
   color: #ced0da;
 }
 
+.header-column span.active-search {
+  color: #657997;
+}
+
+.hide {
+  display: none;
+}

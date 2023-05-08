@@ -15,7 +15,7 @@ const TaskAEditModal = ({ id, title, description, status, limit, handleChange, h
     form.setFieldsValue({
       title: title,
       description: description,
-      limit: dayjs(limit, "YYYY/MM/DD"),
+      limit: dayjs(limit),
     });
   }, [form, title, description, limit]);
 

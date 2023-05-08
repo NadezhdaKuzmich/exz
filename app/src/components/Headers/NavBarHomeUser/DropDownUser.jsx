@@ -46,10 +46,10 @@ const DropdDownUser = () => {
       }}
       placement="bottomRight"
       overlayClassName="dropdown"
-      // arrow
+      arrow
     >
       <a href="!#" onClick={(e) => e.preventDefault()}>
-        <Avatar size="large" icon={<UserOutlined />} />
+        <Avatar size="large" icon={<UserOutlined />} style={{ backgroundColor: '#6775d842' }}/>
       </a>
     </Dropdown>
   );

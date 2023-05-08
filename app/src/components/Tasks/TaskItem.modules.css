@@ -6,15 +6,27 @@
 }
 
 .task-todo {
-  background: #e7ecff;
+  /* background: #e7ecff; */
+  /* background: linear-gradient(190deg, #edeff9, #cfd4ff); */
+  background: linear-gradient(190deg, #f2f3fc, #e2e4fd);
 }
 
 .task-inprogress {
-  background: #e0ecff;
+  /* background: #e0ecff; */
+  /* background: linear-gradient(190deg, #e0ecff, #d3e0fc); */
+  background: linear-gradient(190deg, #e5eefb, #e9f0fe);
 }
 
 .task-done {
-  background: #ddfaf2;
+  /* background: #ddfaf2; */
+  /* background: linear-gradient(190deg, #ddfaf2, #bde3e6); */
+  background: linear-gradient(190deg, #f0f3f2, #dfeeef);
+}
+
+.task-overdue {
+  /* background: #ffa0a359; */
+  /* background: linear-gradient(190deg, #fcd0d159, #ecb2b4ed); */
+  background: linear-gradient(190deg, #fae8e9c9, #facfd0d9);
 }
 
 .title-card-task {

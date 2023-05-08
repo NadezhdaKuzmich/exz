@@ -19,12 +19,17 @@ const EmptyComponent = () => {
           </span>
         }
       >
-        <Tooltip placement="bottom" title="Add new board" color="#979dcc">
+        <Tooltip
+          placement="bottom"
+          title="Add new board"
+          color="#fff"
+          overlayInnerStyle={{ color: "#8fa5eb" }}
+        >
           <Button
             type="primary"
             className="btn-st"
             onClick={() => dispatch(toggleModal({ modal: "isOpenAddBoard" }))}
-            >
+          >
             Create Now
           </Button>
         </Tooltip>

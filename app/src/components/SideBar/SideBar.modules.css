@@ -1,10 +1,15 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 200px;
+  min-height: 74vw;
+  padding: 41px 20px 0 0;
+  gap: 10px;
+}
+
+.sidebar-wrap {
+  display: flex;
+  flex-direction: column;
   min-height: 60vw;
-  padding: 30px 20px 30px 0;
   gap: 8px;
 }
 
@@ -16,16 +21,20 @@
 }
 
 .board-btn {
+  width: 100%;
   display: flex;
   align-items: center;
+  position: relative;
   justify-content: space-between;
-  width: 100%;
-  overflow: hidden;
-  color: #9a95e2;
-  border: 1px solid #e3e3e3;
-  background: #ffffff;
-  border-radius: 8px;
+  color: #fff;
+  background: #f0ecfc;
+  background-image: linear-gradient(336deg, #cdddf5 0%, #cacaff 88%);
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
   padding: 10px 8px 10px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  overflow: hidden;
   cursor: pointer;
 }
 
@@ -39,21 +48,84 @@
 }
 
 .icon-board {
-  color: #9a95e2;
+  color: #fff;
   margin-right: 5px;
 }
 
 .btn-name-board {
-  color: #9a95e2;
-}
-
-.btn-name-board:hover {
   color: #fff;
+  background: transparent;
 }
 
-.active,
+.active {
+  background-image: linear-gradient(336deg, #bbd3f9 0%, #a7a7f7 88%);
+}
+
 .active .icon-board,
 .active .btn-name-board {
   color: #fff;
-  background: #a7a4f5;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-drawer
+  .ant-drawer-header-title {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-drawer .ant-drawer-title {
+  color: #565c8e;
+}
+
+.side {
+  background: #bec4f6;
+}
+
+.hide-overdue {
+  display: none;
+}
+
+@media screen and (max-width: 992px) {
+  :where(.css-dev-only-do-not-override-yp8pcc).ant-btn > .hide {
+    display: none;
+  }
+  .hide-overdue {
+    display: block;
+  }  
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-drawer
+  .ant-drawer-content.wrapper-drawer {
+  background: #fefefee6;
+  backdrop-filter: blur(1px);
+  border-radius: 15px;
+  border: 1px solid rgba(43, 43, 43, 0.568);
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-modal .ant-modal-header {
+  background: none;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-modal .ant-modal-content {
+  background: #fefefee6;
+  backdrop-filter: blur(1px);
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-input,
+:where(.css-dev-only-do-not-override-yp8pcc).ant-picker {
+  background: #cccccc0f; 
+  backdrop-filter: blur(8px);
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-btn-default {
+  background-color: #f4f4f7;
+}
+
+.tooltip {
+  backdrop-filter: blur(1px);
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-badge .ant-badge-count {
+  background: #ff6a6c;
 }

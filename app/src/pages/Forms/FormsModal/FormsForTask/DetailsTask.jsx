@@ -5,6 +5,7 @@ import {
   CheckCircleOutlined,
   DeleteOutlined,
   EditOutlined,
+  ExclamationCircleOutlined
 } from "@ant-design/icons";
 import { deleteTask } from "../../../../slices/BoardsSlice";
 import { toggleModal } from "../../../../slices/ModalSlice";
@@ -30,6 +31,13 @@ const DetailsTask = ({ id, title, date, description, status, limit }) => {
             done
           </Tag>
         );
+        case "overdue":
+          return (
+            <Tag icon={<ExclamationCircleOutlined />} color="error">
+            warning
+          </Tag>
+          );
+  
       default:
         return false;
     }
@@ -52,64 +60,60 @@ const DetailsTask = ({ id, title, date, description, status, limit }) => {
   };
 
   return (
-    <>
-      <Modal
-        title={<span className="title-modal">Details of task:</span>}
-        centered
-        open={isOpenDetailsTask}
-        onCancel={() => dispatch(toggleModal({ modal: "isOpenDetailsTask" }))}
-        bodyStyle={{ padding: "10px 0 0" }}
-        width={500}
-        footer={null}
-      >
-        <Descriptions column={1} labelStyle={{ width: "30%" }}>
-          <Descriptions.Item label="Title" labelStyle={{ color: "#6f738c" }}>
-            <h3 className="title-description">{title}</h3>
-          </Descriptions.Item>
-          <Descriptions.Item label="Status" labelStyle={{ color: "#6f738c" }}>
-            {chooseTag(status)}
-          </Descriptions.Item>
-          <Descriptions.Item label="Date" labelStyle={{ color: "#6f738c" }}>
-            <span className="date">{date}</span>
-          </Descriptions.Item>
-          <Descriptions.Item
-            label="Deadline"
-            labelStyle={{ color: "#6f738c" }}
-          >
-            <span className="date">{limit}</span>
-          </Descriptions.Item>
-          <Descriptions.Item
-            label="Description"
-            labelStyle={{ color: "#6f738c" }}
-          >
-            <p className="descript">{description}</p>
-          </Descriptions.Item>
-        </Descriptions>
-        <div className="footer-modal-task">
-          <Button
-            type="text"
-            size="small"
-            className="edit-modal-btn"
-            icon={<EditOutlined />}
-            onClick={handleEdit}
-          >
-            Edit
+    <Modal
+      title={<span className="title-modal">Details of task:</span>}
+      centered
+      open={isOpenDetailsTask}
+      onCancel={() => dispatch(toggleModal({ modal: "isOpenDetailsTask" }))}
+      bodyStyle={{ padding: "10px 0 0" }}
+      className="modal-detail"
+      width={500}
+      footer={null}
+    >
+      <Descriptions column={1} labelStyle={{ width: "30%" }}>
+        <Descriptions.Item label="Title" labelStyle={{ color: "#6f738c" }}>
+          <h3 className="title-description">{title}</h3>
+        </Descriptions.Item>
+        <Descriptions.Item label="Status" labelStyle={{ color: "#6f738c" }}>
+          {chooseTag(status)}
+        </Descriptions.Item>
+        <Descriptions.Item label="Date" labelStyle={{ color: "#6f738c" }}>
+          <span className="date">{new Date(date).toLocaleString()}</span>
+        </Descriptions.Item>
+        <Descriptions.Item label="Deadline" labelStyle={{ color: "#6f738c" }}>
+          <span className="date">{new Date(limit).toLocaleString()}</span>
+        </Descriptions.Item>
+        <Descriptions.Item
+          label="Description"
+          labelStyle={{ color: "#6f738c" }}
+        >
+          <p className="descript">{description}</p>
+        </Descriptions.Item>
+      </Descriptions>
+      <div className="footer-modal-task">
+        <Button
+          type="text"
+          size="small"
+          className="edit-modal-btn"
+          icon={<EditOutlined />}
+          onClick={handleEdit}
+        >
+          Edit
+        </Button>
+        <Popconfirm
+          title="Delete the task"
+          description="Are you sure to delete this task?"
+          onConfirm={handleDelete}
+          onCancel={cancel}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button type="text" size="small" danger icon={<DeleteOutlined />}>
+            Delete
           </Button>
-          <Popconfirm
-            title="Delete the task"
-            description="Are you sure to delete this task?"
-            onConfirm={handleDelete}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="text" size="small" danger icon={<DeleteOutlined />}>
-              Delete
-            </Button>
-          </Popconfirm>
-        </div>
-      </Modal>
-    </>
+        </Popconfirm>
+      </div>
+    </Modal>
   );
 };
 

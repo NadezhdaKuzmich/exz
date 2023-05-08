@@ -134,7 +134,7 @@ header {
     transition: 100ms;
   }
 
-  button {
+  button.btn {
     display: none;
   }
 }

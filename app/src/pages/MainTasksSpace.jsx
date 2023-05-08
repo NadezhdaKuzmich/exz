@@ -1,7 +1,8 @@
-import { useSelector} from "react-redux";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import SideBar from "../components/SideBar/SideBar";
 import Column from "../components/Tasks/Column";
+import { findOverdueTask } from "../slices/BoardsSlice";
 import TaskAddModal from "./Forms/FormsModal/FormsForTask/TaskAddModal";
 import DetailsTask from "./Forms/FormsModal/FormsForTask/DetailsTask";
 import TaskAEditModal from "./Forms/FormsModal/FormsForTask/TaskEditModal";
@@ -11,16 +12,35 @@ const MainTasksSpace = () => {
   const { boards } = useSelector((state) => state.boards);
   const board = boards.find((board) => board.isActive === true);
   const columns = board ? board.columns : [];
-  const [ state, setState ] = useState();
-  const [ status, setStatus ] = useState();
+  let filtered = [];
+  columns.forEach((column) => {
+    if (column.name !== "done") {
+      column.tasks.forEach((task, index) => {
+        if (Date.parse(task.limit) < new Date()) {
+          filtered.push({ column: column.id, taskIndex: index });
+        }
+      });
+    }
+  });
+
+  const useFetching = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+      dispatch(findOverdueTask({ filtered: filtered }));
+    }, [dispatch])
+  }
+  useFetching();
+
+  const [state, setState] = useState();
+  const [status, setStatus] = useState();
 
   const handleAddTask = (name) => {
     setStatus(name);
-  }
+  };
 
   const handleDetails = (task) => {
     setState(task);
-  }
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -32,24 +52,35 @@ const MainTasksSpace = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container-board">
       <div className="wrap-boards">
         <SideBar />
-        <div className="board-space">
-          {boards.length > 0 ? (
-            <>
+        {boards.length > 0 ? (
+          <div className="wrap-board-space">
+            <ul className={`board-space ${filtered.length === 0 ? "full-width" : ""}`}>
               {columns.map((column, index) => (
-                <Column key={index} colId={index}  handleDetails={handleDetails} handleAddTask={handleAddTask} col={status}/>
+                <Column
+                  key={index}
+                  colId={index}
+                  handleDetails={handleDetails}
+                  handleAddTask={handleAddTask}
+                  col={status}
+                />
               ))}
-            </>
-          ) : (
-            <EmptyComponent />
-          )}
-        </div>
+            </ul>
+          </div>
+        ) : (
+          <EmptyComponent />
+        )}
       </div>
+
       <TaskAddModal column={status} />
       <DetailsTask {...state} />
-      <TaskAEditModal {...state } handleChange={handleChange} handleDataSet={handleDataSet} />
+      <TaskAEditModal
+        {...state}
+        handleChange={handleChange}
+        handleDataSet={handleDataSet}
+      />
     </div>
   );
 };

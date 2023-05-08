@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { toggleModal } from "../../../../slices/ModalSlice";
 import { addTask } from "../../../../slices/BoardsSlice";
-// import { InitialValue } from "./InitialValue";
 import { Modal, Form, Input, DatePicker } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
@@ -41,7 +40,7 @@ const TaskAddModal = ({ column }) => {
       addTask({
         title: title,
         description: description,
-        status: column,
+        statusName: column,
         timeLimit: timeLimit,
       })
     );

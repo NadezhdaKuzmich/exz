@@ -6,11 +6,12 @@ import {
   PlusOutlined,
   SearchOutlined,
   CalendarOutlined,
+  ClockCircleOutlined
 } from "@ant-design/icons";
 import { Button, Tooltip, Badge, Input, DatePicker } from "antd";
 import TaskItem from "./TaskItem";
 import "./Column.modules.css";
-import { dragTask } from "../../slices/BoardsSlice";
+import { searchTask, rangeDateTask, dragTask } from "../../slices/BoardsSlice";
 import { toggleModal } from "../../slices/ModalSlice";
 import { useState } from "react";
 const { RangePicker } = DatePicker;
@@ -28,32 +29,10 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
     switch (name) {
       case "todo": {
         return (
-          <div className="done-title">
-            <Badge count={column.tasks.length} offset={[12, 0]} color="#7785e4">
-              <PushpinOutlined className="icon-column" />
-              {column.name}
-            </Badge>
-            <div>
-              <Button
-                id={column.id}
-                type="link"
-                shape="circle"
-                size="small"
-                name="word"
-                icon={<SearchOutlined />}
-                onClick={chooseSearch}
-              />
-              <Button
-                id={column.id}
-                type="link"
-                shape="circle"
-                size="small"
-                name="date"
-                icon={<CalendarOutlined />}
-                onClick={chooseSearch}
-              />
-            </div>
-          </div>
+          <Badge count={column.tasks.length} offset={[12, 0]} color="#7785e4">
+            <PushpinOutlined className="icon-column" />
+            {column.name}
+          </Badge>
         );
       }
       case "in progress": {
@@ -76,6 +55,16 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
           </span>
         );
       }
+      case "overdue": {
+        return (
+          <span>
+            <Badge count={column.tasks.length} offset={[12, 0]} color="#ff4d4fa1">
+            <ClockCircleOutlined className="icon-column" />
+              {column.name}
+            </Badge>
+          </span>
+        );
+      }
       default:
         return false;
     }
@@ -84,9 +73,28 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
   const chooseSearch = (e) => {
     if (search === e.currentTarget.name) {
       setSearch(false);
+      dispatch(searchTask({ searchCol: searchCol, titleSearch: "" }));
     } else {
       setSearch(e.currentTarget.name);
       setSearchCol(e.currentTarget.id);
+    }
+  };
+
+  const handleSearch = (e) => {
+    dispatch(searchTask({ searchCol: searchCol, titleSearch: e.target.value }));
+  };
+
+  const handleDateRange = (dates, dataString) => {
+    if (dates) {
+      dispatch(
+        rangeDateTask({
+          searchCol: searchCol,
+          startDate: dataString[0],
+          endDate: dataString[1],
+        })
+      );
+    } else {
+      dispatch(searchTask({ searchCol: searchCol, titleSearch: "" }));
     }
   };
 
@@ -99,7 +107,6 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
     const { prevColIndex, prevTaskIndex, taskIndex } = JSON.parse(
       e.dataTransfer.getData("text")
     );
-
     if (colId !== prevColIndex || taskIndex !== prevTaskIndex) {
       dispatch(dragTask({ colId, prevColIndex, taskIndex }));
     }
@@ -110,45 +117,101 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
   };
 
   return (
-    <div className="column" onDrop={handleOnDrop} onDragOver={handleOnDragOver}>
+    <li
+      className={`column ${column.name === "overdue" ? "overdue-column" : ""} ${column.name === "overdue" && column.tasks.length === 0 ? "hide" : "" }`}
+      onDrop={handleOnDrop}
+      onDragOver={handleOnDragOver}
+      id={column.name === "overdue" ? "overdue" : ""}
+    >
       <div className={`header-column ${column.name.split(" ").join("")}`}>
-        {headerColumn(column.name)}
+        <div className="title">
+          {headerColumn(column.name)}
+          {column.name !== "overdue" ? (
+            <div>
+              <Button
+                id={column.id}
+                type="link"
+                shape="circle"
+                size="small"
+                name="word"
+                icon={
+                  <SearchOutlined
+                    className={search === "word" ? "active-search" : ""}
+                  />
+                }
+                onClick={chooseSearch}
+              />
+              <Button
+                id={column.id}
+                type="link"
+                shape="circle"
+                size="small"
+                name="date"
+                icon={
+                  <CalendarOutlined
+                    className={search === "date" ? "active-search" : ""}
+                  />
+                }
+                onClick={chooseSearch}
+              />
+            </div>
+          ) : null}
+        </div>
       </div>
-      <div className="tasks-list">
-        {searchCol === column.id ? (
-          search === "word" ? (
-            <Search placeholder="input search text" style={{ width: "100%" }} />
-          ) : search === "date" ? (
-            <RangePicker />
-          ) : null
-        ) : null}
-        {column.tasks.map((task, index) => (
-          <TaskItem
-            key={index}
-            taskIndex={index}
-            colId={colId}
-            task={task}
-            handleDetails={handleDetails}
-          />
-        ))}
-        <Tooltip
-          placement="right"
-          title="Add new task"
-          color="#fff"
-          overlayInnerStyle={{ color: "#8fa5eb" }}
-        >
-          <Button
-            type="text"
-            className="add-task-btn"
-            icon={<PlusOutlined />}
-            id={column.name}
-            onClick={handleAdd}
-          >
-            Add new task...
-          </Button>
-        </Tooltip>
+      <div className="task-list-wrap">
+        <div className="task-list-box">
+          <ul className="tasks-list">
+            {column.name !== "overdue" ? (
+              searchCol === column.id ? (
+                search === "word" ? (
+                  <Search
+                    placeholder="input search text"
+                    style={{ width: "100%" }}
+                    onChange={handleSearch}
+                  />
+                ) : search === "date" ? (
+                  <RangePicker onChange={handleDateRange} />
+                ) : null
+              ) : null
+            ) : null}
+            {column.tasks.map((task, index) => {
+              if (task.visible) {
+                return (
+                  <TaskItem
+                    key={index}
+                    taskIndex={index}
+                    colId={colId}
+                    task={task}
+                    handleDetails={handleDetails}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })}
+          </ul>
+          {column.name !== "overdue" ? (
+            <Tooltip
+              placement="right"
+              title="Add new task"
+              color="#fefefee6"
+              overlayClassName="tooltip"
+              overlayInnerStyle={{ color: "#8fa5eb" }}
+            >
+              <Button
+                type="text"
+                className="add-task-btn"
+                icon={<PlusOutlined />}
+                id={column.name}
+                onClick={handleAdd}
+              >
+                Add new task...
+              </Button>
+            </Tooltip>
+          ) : null}
+        </div>
       </div>
-    </div>
+    </li>
   );
 };
 
