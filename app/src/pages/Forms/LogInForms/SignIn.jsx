@@ -1,17 +1,28 @@
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../../slices/AuthSlice/AuthSlise";
 import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Avatar } from "antd";
-import "./Forms.modules.css";
+import styles from "./Forms.module.css";
+import { useEffect } from "react";
 
 const SignIn = () => {
+  const { user } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.username && user.password) {
+      navigate("/user");
+    }
+  }, [user, navigate]);
+
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-    navigate("/user", { replace: true });
+    dispatch(login(values));
   };
 
   return (
-    <div className="form-container">
+    <div className={styles.form}>
       <h2>Welcome</h2>
       <Avatar
         size={54}
@@ -20,7 +31,7 @@ const SignIn = () => {
       />
       <Form
         name="normal_login"
-        className="login-form"
+        className={styles.login}
         initialValues={{
           remember: true,
         }}
@@ -36,7 +47,7 @@ const SignIn = () => {
           ]}
         >
           <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
+            prefix={<UserOutlined className={styles.icon} />}
             placeholder="Username"
             autoComplete="username"
             size="large"
@@ -51,8 +62,8 @@ const SignIn = () => {
             },
           ]}
         >
-          <Input.Password 
-            prefix={<LockOutlined className="site-form-item-icon" />}
+          <Input.Password
+            prefix={<LockOutlined className={styles.icon} />}
             type="password"
             placeholder="Password"
             size="large"
@@ -71,12 +82,7 @@ const SignIn = () => {
         </Form.Item>
       </Form>
       <p>
-        Don't have an account?{" "}
-        <Link
-          to="/sign-up"
-        >
-          Sign Up
-        </Link>
+        Don't have an account? <Link to="/sign-up">Sign Up</Link>
       </p>
     </div>
   );

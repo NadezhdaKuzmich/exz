@@ -1,0 +1,76 @@
+.mainWrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 100px 0;
+}
+
+.promo {
+    width: 35%;
+}
+
+.title {
+    font-size: 2vw;
+    line-height: 1.2;
+    color: #2c3a77;
+    margin: 0 0 30px;
+}
+
+.promo p {
+    font-size: 1.5vw;
+    line-height: 1.5;
+    color: #a6aac1;
+    margin: 0 0 40px;
+}
+
+
+.image {
+    max-width: 60%;
+}
+
+@media screen and (max-width: 768px) {
+    .mainWrap {
+        flex-direction: column-reverse;
+        padding: 40px 0;
+        gap: 40px;
+    }    
+
+    .promo {
+        min-width: 60%;
+        text-align: center;
+    }
+
+    .image {
+        min-width: 70%;
+    }    
+
+    .title {
+        font-size: 3vw;
+        margin: 0 0 20px;
+    }
+
+    .promo p {
+        font-size: 18px;
+        margin: 0 0 30px;
+    }    
+    
+}
+
+@media screen and (max-width: 520px) {
+    .promo {
+        min-width: 80%;
+    }
+
+    .title {
+        font-size: 1.2rem;
+    }
+
+    .promo p {
+        font-size: 14px;
+    }    
+
+    .image {
+        min-width: 100%;
+    }    
+  }

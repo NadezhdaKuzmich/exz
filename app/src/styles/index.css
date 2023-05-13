@@ -3,7 +3,10 @@
   margin: 0;
   padding: 0;
   font-family: "PT Sans", sans-serif;
-  /* background: linear-gradient(45deg, #837bd2, #ace2d2); */
+}
+
+li {
+  list-style: none;
 }
 
 html {
@@ -11,45 +14,24 @@ html {
   scroll-padding-top: 120px;
 }
 
-.work-space {
-  position: relative;
-  background-image: linear-gradient(
-      to top,
-      rgba(200, 204, 247, 0.536),
-      rgba(234, 237, 245, 0.538)
-    ),
-    url(../5.jpg);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.work-space:before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(3px);
-  background: #fcfcff6e;
-}
-
 .container {
-  max-width: 1250px;
+  max-width: 1350px;
+  min-width: 320px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
 .container-board {
-  max-width: 1250px;
+  max-width: 1350px;
+  min-height: 1000px;
+  padding: 0;
   margin: 0 auto;
-  padding: 0 0 0 20px;
 }
 
 .empty-container {
   width: 100%;
+  min-height: 1000px;
+  z-index: 2;
   padding: 80px 0;
 }
 
@@ -57,23 +39,104 @@ html {
   background: #6875d8;
 }
 
+.form-button {
+  background: #6875d8;
+  width: 100%;
+}
+
 .wrap-boards {
   display: flex;
+  flex-direction: column;
+}
+
+.tooltip {
+  backdrop-filter: blur(1px);
 }
 
 .board-space {
   display: grid;
   width: fit-content;
-  grid-template-columns: repeat(4, minmax(0, 400px));
+  height: 1000px;
+  align-items: flex-end;
+  grid-template-columns: repeat(4, minmax(232px, 440px));
   justify-content: space-between;
   grid-gap: 20px 20px;
-  border-top: none;
-  padding: 40px 20px 20px 0;
+  padding: 20px 20px;
   gap: 20px;
 }
 
+.wrap-board-space::-webkit-scrollbar {
+  height: 6px;
+}
+
+.wrap-board-space::-webkit-scrollbar-thumb {
+  background: #bec4f6;
+  box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+  border-radius: 100px;
+}
+
+.wrap-board-space {
+  background: #eeeefa78;
+  /* background: linear-gradient(45deg, #dedafe, #dcf5e7); */
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  z-index: 1;
+  transform: rotateX(180deg);
+}
+
 .board-space.full-width {
-  grid-template-columns: repeat(3, minmax(0, 400px));
+  grid-template-columns: repeat(3, minmax(232px, 440px));
+}
+
+.title-modal {
+  font-size: 18px;
+  color: #444975;
+}
+
+.title-description {
+  color: #565c8e;
+}
+
+.date {
+  font-size: 12px;
+  color: #6c6f85;
+}
+
+.descript {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: justify;
+  overflow: hidden;
+  color: #6b7590;
+}
+
+.footer-modal-task {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 5px 0 0;
+  gap: 4px;
+}
+
+.edit-modal-btn {
+  color: #649bf0;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-btn.ant-btn-sm.btn-details {
+  font-size: 12px;
+  color: #565c8ea8;
+  padding: 0;
+}
+
+.btn-details span:hover {
+  color: #a6aee0;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-btn-text:not(:disabled):hover {
+  color: #4276c3;
+  background: #f0f5ff;
 }
 
 :where(.css-dev-only-do-not-override-yp8pcc).ant-btn-primary:not(
@@ -129,6 +192,8 @@ html {
   color: #565c8e;
 }
 
+:where(.css-dev-only-do-not-override-yp8pcc).ant-select-single.ant-select-lg
+  .ant-select-selector,
 :where(.css-dev-only-do-not-override-yp8pcc).ant-input,
 :where(.css-dev-only-do-not-override-yp8pcc).ant-picker
   .ant-picker-input
@@ -136,64 +201,42 @@ html {
   color: #686c92;
 }
 
-@media screen and (max-width: 992px) {  
+@media screen and (max-width: 992px) {
   :where(.css-dev-only-do-not-override-yp8pcc).ant-btn.ant-btn-lg {
     padding: 6px 12px;
   }
 
-  .wrap-board-space {
-    scroll-behavior: smooth;
-    overflow-y: auto;
-    margin: 20px 0 0;
-    z-index: 1;
+  :where(.css-dev-only-do-not-override-yp8pcc).ant-btn > span.hide {
+    display: none;
   }
 
-  .board-space {
-    padding: 40px 20px 13px 0;
-  }
-  
-  .wrap-board-space::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  .wrap-board-space::-webkit-scrollbar-thumb {
-    background: #bec4f6;
-    box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
-    border-radius: 100px;
-  }
-
-  .board-space {
-    align-items: flex-end;
-  }
-
-  .board-space:not(.full-width){
+  .board-space:not(.full-width) {
     grid-template-columns: repeat(4, 1fr);
   }
 
   .board-space.full-width {
     grid-template-columns: repeat(3, 1fr);
-  }  
-
-  .wrap-board-space,
-  .wrap-board-space .column {
-    transform: rotateX(180deg);
-  }
-
-  .column {
-    min-width: 220px;
   }
 }
 
-.breadcrumb-board {
-  font-size: 16px;
-  padding: 6px 0;
+@media screen and (max-width: 320px) {
+  .ant-drawer-content-wrapper {
+    width: 100%;
+  }
 }
 
 :where(.css-dev-only-do-not-override-yp8pcc).ant-breadcrumb .anticon,
 :where(.css-dev-only-do-not-override-yp8pcc).ant-breadcrumb
   .ant-breadcrumb-separator {
-  font-size: 18px;
+  font-size: 20px;
   color: #ffffffc8;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-drawer .ant-drawer-content {
+  background: #fefefee6;
+  backdrop-filter: blur(1px);
+  border-radius: 15px;
+  border: 1px solid rgba(43, 43, 43, 0.568);
 }
 
 :where(.css-dev-only-do-not-override-yp8pcc).ant-breadcrumb ol {
@@ -201,6 +244,7 @@ html {
 }
 
 :where(.css-dev-only-do-not-override-yp8pcc).ant-breadcrumb li:last-child {
+  font-size: 18px;
   color: #ffffffc8;
 }
 
@@ -209,4 +253,65 @@ html {
   .modal-detail {
   background: #ffffffc8;
   border-radius: 8px;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-drawer
+  .ant-drawer-header-title {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-drawer .ant-drawer-title {
+  color: #565c8e;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-drawer .ant-drawer-close {
+  margin-inline-end: 0;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-avatar-lg.ant-avatar-icon {
+  font-size: 18px;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-tag {
+  margin-inline-end: 4px;
+}
+
+@media screen and (max-width: 768px) {
+  .hideBtn {
+    display: none;
+  }
+
+  .block {
+    max-width: 140px;
+  }
+}
+
+.block {
+  min-width: 140px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+}
+
+.block:hover {
+  color: #6875d8;
+}
+
+@media screen and (max-width: 768px) {
+  .block {
+    font-size: 2.5vw;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .block {
+    font-size: 1.2rem;
+  }
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-progress-line {
+  margin-bottom: 0;
 }

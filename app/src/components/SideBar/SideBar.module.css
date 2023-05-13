@@ -1,26 +1,41 @@
+.wrapBg {
+  background: #ffffff78;
+  box-shadow: 1px 4px 15px #868cae8a;
+  border-bottom: 3px solid #b5b5ff;
+  backdrop-filter: blur(15px);
+  margin: 0 0 1px;
+}
+
 .sidebar {
   display: flex;
-  flex-direction: column;
-  min-height: 74vw;
-  padding: 41px 20px 0 0;
+  align-items: center;
+  justify-content: space-between;
+  border-top-right-radius: 8px;
+  padding: 14px 0;
   gap: 10px;
 }
 
-.sidebar-wrap {
+.sidebarWrap {
   display: flex;
   flex-direction: column;
   min-height: 60vw;
   gap: 8px;
 }
 
-.sidebar-count {
+.btnsSet {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.count {
   display: block;
   font-size: 16px;
   font-weight: 600;
   color: #9995e1;
 }
 
-.board-btn {
+.boardBtn {
   width: 100%;
   display: flex;
   align-items: center;
@@ -38,7 +53,7 @@
   cursor: pointer;
 }
 
-.board-btn p {
+.boardBtn p {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -47,12 +62,19 @@
   text-overflow: ellipsis;
 }
 
-.icon-board {
+.addBoard {
+  color: #565c8e;
+  background: #e6e6ff;
+  backdrop-filter: blur(8px);
+  background-origin: border-box;
+}
+
+.icon {
   color: #fff;
   margin-right: 5px;
 }
 
-.btn-name-board {
+.btnName {
   color: #fff;
   background: transparent;
 }
@@ -61,38 +83,13 @@
   background-image: linear-gradient(336deg, #bbd3f9 0%, #a7a7f7 88%);
 }
 
-.active .icon-board,
-.active .btn-name-board {
+.active .icon,
+.active .btnName {
   color: #fff;
-}
-
-:where(.css-dev-only-do-not-override-yp8pcc).ant-drawer
-  .ant-drawer-header-title {
-  width: 100%;
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
 }
 
 :where(.css-dev-only-do-not-override-yp8pcc).ant-drawer .ant-drawer-title {
   color: #565c8e;
-}
-
-.side {
-  background: #bec4f6;
-}
-
-.hide-overdue {
-  display: none;
-}
-
-@media screen and (max-width: 992px) {
-  :where(.css-dev-only-do-not-override-yp8pcc).ant-btn > .hide {
-    display: none;
-  }
-  .hide-overdue {
-    display: block;
-  }  
 }
 
 :where(.css-dev-only-do-not-override-yp8pcc).ant-drawer
@@ -114,7 +111,7 @@
 
 :where(.css-dev-only-do-not-override-yp8pcc).ant-input,
 :where(.css-dev-only-do-not-override-yp8pcc).ant-picker {
-  background: #cccccc0f; 
+  background: #cccccc0f;
   backdrop-filter: blur(8px);
 }
 
@@ -122,10 +119,21 @@
   background-color: #f4f4f7;
 }
 
-.tooltip {
-  backdrop-filter: blur(1px);
-}
-
 :where(.css-dev-only-do-not-override-yp8pcc).ant-badge .ant-badge-count {
   background: #ff6a6c;
+}
+
+.ant-drawer-content-wrapper {
+  width: 320px;
+}
+
+.hide {
+  display: none;
+}
+
+.progress {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 10px;
 }

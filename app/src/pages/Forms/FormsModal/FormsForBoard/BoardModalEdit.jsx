@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { toggleModal } from "../../../../slices/ModalSlice";
-import { editBoard } from "../../../../slices/BoardsSlice";
+import { editBoard } from "../../../../slices/BoardSlice/BoardsSlice";
 import { Form, Modal, Input } from "antd";
 import { useState, useEffect } from "react";
 

@@ -10,8 +10,8 @@ import {
 } from "@ant-design/icons";
 import { Button, Tooltip, Badge, Input, DatePicker } from "antd";
 import TaskItem from "./TaskItem";
-import "./Column.modules.css";
-import { searchTask, rangeDateTask, dragTask } from "../../slices/BoardsSlice";
+import styles from "./Column.module.css";
+import { searchTask, rangeDateTask, dragTask } from "../../slices/BoardSlice/BoardsSlice";
 import { toggleModal } from "../../slices/ModalSlice";
 import { useState } from "react";
 const { RangePicker } = DatePicker;
@@ -30,7 +30,7 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
       case "todo": {
         return (
           <Badge count={column.tasks.length} offset={[12, 0]} color="#7785e4">
-            <PushpinOutlined className="icon-column" />
+            <PushpinOutlined className={styles.icon} />
             {column.name}
           </Badge>
         );
@@ -39,7 +39,7 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
         return (
           <span>
             <Badge count={column.tasks.length} offset={[12, 0]} color="#7fadf6">
-              <LoadingOutlined className="icon-column" />
+              <LoadingOutlined className={styles.icon} />
               {column.name}
             </Badge>
           </span>
@@ -49,7 +49,7 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
         return (
           <span>
             <Badge count={column.tasks.length} offset={[12, 0]} color="#77c1ab">
-              <CarryOutOutlined className="icon-column" />
+              <CarryOutOutlined className={styles.icon} />
               {column.name}
             </Badge>
           </span>
@@ -59,7 +59,7 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
         return (
           <span>
             <Badge count={column.tasks.length} offset={[12, 0]} color="#ff4d4fa1">
-            <ClockCircleOutlined className="icon-column" />
+            <ClockCircleOutlined className={styles.icon} />
               {column.name}
             </Badge>
           </span>
@@ -103,6 +103,10 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
     dispatch(toggleModal({ modal: "isOpenAddTask" }));
   };
 
+  const getStatusName = (e) => {
+    handleAddTask(e.currentTarget.id);
+  }
+
   const handleOnDrop = (e) => {
     const { prevColIndex, prevTaskIndex, taskIndex } = JSON.parse(
       e.dataTransfer.getData("text")
@@ -118,13 +122,14 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
 
   return (
     <li
-      className={`column ${column.name === "overdue" ? "overdue-column" : ""} ${column.name === "overdue" && column.tasks.length === 0 ? "hide" : "" }`}
+      className={`${styles.column} ${column.name === "overdue" ? styles.overdueCol : ""} ${column.name === "overdue" && column.tasks.length === 0 ? styles.hide : "" }`}
       onDrop={handleOnDrop}
       onDragOver={handleOnDragOver}
-      id={column.name === "overdue" ? "overdue" : ""}
+      onClick={getStatusName}
+      id={column.name}
     >
-      <div className={`header-column ${column.name.split(" ").join("")}`}>
-        <div className="title">
+      <div className={`${styles.header} ${styles[column.name.split(" ").join("")]}`}>
+        <div className={styles.title}>
           {headerColumn(column.name)}
           {column.name !== "overdue" ? (
             <div>
@@ -136,7 +141,7 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
                 name="word"
                 icon={
                   <SearchOutlined
-                    className={search === "word" ? "active-search" : ""}
+                    className={search === "word" ? styles.activeSearch : ""}
                   />
                 }
                 onClick={chooseSearch}
@@ -149,7 +154,7 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
                 name="date"
                 icon={
                   <CalendarOutlined
-                    className={search === "date" ? "active-search" : ""}
+                    className={search === "date" ? styles.activeSearch : ""}
                   />
                 }
                 onClick={chooseSearch}
@@ -158,9 +163,9 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
           ) : null}
         </div>
       </div>
-      <div className="task-list-wrap">
-        <div className="task-list-box">
-          <ul className="tasks-list">
+      <div className={styles.taskWrap}>
+        <div className={styles.taskBox}>
+          <ul className={styles.tasksList}>
             {column.name !== "overdue" ? (
               searchCol === column.id ? (
                 search === "word" ? (
@@ -200,7 +205,7 @@ const Column = ({ colId, handleDetails, handleAddTask }) => {
             >
               <Button
                 type="text"
-                className="add-task-btn"
+                className={styles.taskBtn}
                 icon={<PlusOutlined />}
                 id={column.name}
                 onClick={handleAdd}

@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import SideBar from "../components/SideBar/SideBar";
 import Column from "../components/Tasks/Column";
-import { findOverdueTask } from "../slices/BoardsSlice";
+import { findOverdueTask } from "../slices/BoardSlice/BoardsSlice";
 import TaskAddModal from "./Forms/FormsModal/FormsForTask/TaskAddModal";
 import DetailsTask from "./Forms/FormsModal/FormsForTask/DetailsTask";
 import TaskAEditModal from "./Forms/FormsModal/FormsForTask/TaskEditModal";
@@ -22,15 +22,13 @@ const MainTasksSpace = () => {
       });
     }
   });
-
   const useFetching = () => {
     const dispatch = useDispatch();
     useEffect(() => {
       dispatch(findOverdueTask({ filtered: filtered }));
-    }, [dispatch])
-  }
+    }, [dispatch]);
+  };
   useFetching();
-
   const [state, setState] = useState();
   const [status, setStatus] = useState();
 
@@ -51,13 +49,25 @@ const MainTasksSpace = () => {
     setState({ ...state, limit: dateString });
   };
 
+  const handleSelect = (value) => {
+    setState({ ...state, status: value });
+  };
+
+  const handleSelectedItems = (value) => {
+    setState({ ...state, responsible: value });
+  };
+
   return (
-    <div className="container-board">
-      <div className="wrap-boards">
-        <SideBar />
-        {boards.length > 0 ? (
-          <div className="wrap-board-space">
-            <ul className={`board-space ${filtered.length === 0 ? "full-width" : ""}`}>
+    <>
+      <SideBar />
+      {boards.length > 0 ? (
+        <div className="wrap-board-space">
+          <div className="container-board">
+            <ul
+              className={`board-space ${
+                filtered.length === 0 ? "full-width" : ""
+              }`}
+            >
               {columns.map((column, index) => (
                 <Column
                   key={index}
@@ -69,10 +79,10 @@ const MainTasksSpace = () => {
               ))}
             </ul>
           </div>
-        ) : (
-          <EmptyComponent />
-        )}
-      </div>
+        </div>
+      ) : (
+        <EmptyComponent />
+      )}
 
       <TaskAddModal column={status} />
       <DetailsTask {...state} />
@@ -80,8 +90,11 @@ const MainTasksSpace = () => {
         {...state}
         handleChange={handleChange}
         handleDataSet={handleDataSet}
+        handleSelect={handleSelect}
+        handleSelectedItems={handleSelectedItems}
+        col={status}
       />
-    </div>
+    </>
   );
 };
 

@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { AlignRightOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Avatar, Tooltip } from "antd";
 import { toggleModal } from "../../slices/ModalSlice";
-import "./TaskItem.modules.css";
+import styles from "./TaskItem.module.css";
 
 const TaskItem = ({ colId, taskIndex, handleDetails }) => {
   const { boards } = useSelector((state) => state.boards);
@@ -26,18 +26,62 @@ const TaskItem = ({ colId, taskIndex, handleDetails }) => {
 
   return (
     <li
-      className={`card-task task-${column.name.split(" ").join("")}`}
+      className={`${styles.card} ${styles[column.name.split(" ").join("")]}`}
       draggable
       onDragStart={handleOnDrag}
     >
-      <div className="title-card-task">
-        <h4>{task.title}</h4>
-        <span className="time">{new Date(task.date).toLocaleString()}</span>
+      <div className={styles.titleCard}>
+        <div className={styles.titleSet}>
+          <h4>{task.title}</h4>
+          {task.responsible ? (
+            <Avatar.Group
+              maxCount={2}
+              maxStyle={{
+                verticalAlign: "middle",
+                background: "linear-gradient(100deg,  #8b8c94, #c3c5d9)",
+                fontSize: 10,
+              }}
+              size={20}
+            >
+              {task.responsible.map((user, index) => (
+                <Tooltip
+                  key={index}
+                  title={user}
+                  placement="top"
+                  color="#fefefee6"
+                  overlayInnerStyle={{ color: "#8fa5eb" }}
+                  overlayClassName="tooltip"
+                >
+                  <Avatar
+                    style={{
+                      verticalAlign: "middle",
+                    }}
+                    className={`${styles.avatar} ${
+                      styles[column.name.split(" ").join("")]
+                    }`}
+                    size={20}
+                    gap="7"
+                    key={index}
+                  >
+                    {user
+                      .split(" ")
+                      .map((el) => el.slice(0, 1))
+                      .join("")}
+                  </Avatar>
+                </Tooltip>
+              ))}
+            </Avatar.Group>
+          ) : null}
+        </div>
+
+        <span className={styles.time}>
+          {new Date(task.date).toLocaleString()}
+        </span>
       </div>
-      <div className="description">
+      <div className={styles.description}>
         <p>{task.description}</p>
       </div>
-      <div className="footer-card-task">
+      <div className={styles.footerCard}>
         <Button
           size="small"
           type="link"
@@ -46,7 +90,7 @@ const TaskItem = ({ colId, taskIndex, handleDetails }) => {
         >
           <span>
             Show more
-            <AlignRightOutlined style={{ padding: "0 0 0 6px"}}/>
+            <AlignRightOutlined style={{ padding: "0 0 0 6px" }} />
           </span>
         </Button>
       </div>

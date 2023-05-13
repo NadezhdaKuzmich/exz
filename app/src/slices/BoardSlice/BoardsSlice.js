@@ -1,4 +1,4 @@
-import { createSlice,current } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { initialValue } from "./initialValue";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -8,11 +8,12 @@ const BoardsSlice = createSlice({
   reducers: {
     addBoard: (state, action) => {
       const isActive = state.length > 0 ? false : true;
-      const { id, name } = action.payload;
+      const { id, name, author } = action.payload;
       const board = {
         id,
         name: name,
         isActive,
+        author,
         columns: [
           { name: "todo", tasks: [], id: nanoid() },
           { name: "in progress", tasks: [], id: nanoid() },
@@ -29,9 +30,25 @@ const BoardsSlice = createSlice({
       board.name = name;
     },
 
-    deleteBoard: (state) => {
+    deleteBoard: (state, action) => {
+      const { index } = action.payload;
       const board = state.boards.find((board) => board.isActive);
-      state.boards.splice(state.boards.indexOf(board), 1);
+      const indexBoard = state.boards.indexOf(board);
+      state.boards.splice(indexBoard, 1);
+      if (index !== 0) {
+        const prevIndex = index - 1;
+        state.boards.map((board, index) => {
+          index === prevIndex
+            ? (board.isActive = true)
+            : (board.isActive = false);
+          return board;
+        });
+      } else {
+        state.boards.map((board, index) => {
+          index === 0 ? (board.isActive = true) : (board.isActive = false);
+          return board;
+        });
+      }
     },
 
     setBoardActive: (state, action) => {
@@ -44,7 +61,8 @@ const BoardsSlice = createSlice({
     },
 
     addTask: (state, action) => {
-      const { title, description, statusName, timeLimit } = action.payload;
+      const { title, description, statusName, timeLimit, responsible } =
+        action.payload;
       let status = statusName;
       const id = nanoid();
       const date = new Date().toString();
@@ -52,25 +70,38 @@ const BoardsSlice = createSlice({
       const visible = true;
       if (Date.parse(limit) < new Date()) {
         status = "overdue";
-      } 
-      const task = { id, title, date, description, status, limit, visible };
+      }
+      const task = {
+        id,
+        title,
+        date,
+        description,
+        status,
+        limit,
+        responsible,
+        visible,
+      };
       const board = state.boards.find((board) => board.isActive);
       const column = board.columns.find((column) => column.name === status);
       column.tasks.push(task);
     },
 
     editTask: (state, action) => {
-      const { id, title, status, description, limit } = action.payload;
+      const { id, title, prevStatus, status, description, responsible, limit } =
+        action.payload;
       const board = state.boards.find((board) => board.isActive);
-      const column = board.columns.find((column) => column.name === status);
+      const column = board.columns.find((column) => column.name === prevStatus);
       const task = column.tasks.find((task) => task.id === id);
       task.title = title;
+      task.status = status;
+      task.responsible = responsible;
       task.description = description;
       task.limit = limit;
-      // if (prevColIndex === newColIndex) return;
-      // column.tasks = column.tasks.filter((task, index) => index !== taskIndex);
-      // const newCol = board.columns.find((col, index) => index === newColIndex);
-      // newCol.tasks.push(task);
+      if (prevStatus === status) return;
+      column.tasks = column.tasks.filter((task) => task.id !== id);
+      console.log(prevStatus, status);
+      const newCol = board.columns.find((column) => column.name === status);
+      newCol.tasks.push(task);
     },
 
     dragTask: (state, action) => {
@@ -86,13 +117,17 @@ const BoardsSlice = createSlice({
     findOverdueTask: (state, action) => {
       const { filtered } = action.payload;
       const board = state.boards.find((board) => board.isActive);
-      const overdueCol = board.columns.find((column) => column.name === "overdue");
+      const overdueCol = board.columns.find(
+        (column) => column.name === "overdue"
+      );
       filtered.forEach((task) => {
-        const column = board.columns.find((column) => column.id === task.column);
+        const column = board.columns.find(
+          (column) => column.id === task.column
+        );
         const taskOverdue = column.tasks.splice(task.taskIndex, 1)[0];
         taskOverdue.status = "overdue";
         overdueCol.tasks.push(taskOverdue);
-      })
+      });
     },
 
     setTaskStatus: (state, action) => {

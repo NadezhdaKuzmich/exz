@@ -1,5 +1,5 @@
-:root {
-  --primary: #515db6;
+a:has(.btn) {
+  display: contents;
 }
 
 .btn {
@@ -11,7 +11,7 @@
   font-size: 18px;
   color: #fff;
   cursor: pointer;
-  background-color: var(--primary);
+  background-color: #8a8aeb;
 }
 
 .btn:hover {
@@ -20,6 +20,6 @@
   background-color: transparent;
   color: #fff;
   border-radius: 4px;
-  border: 2px solid var(--primary);
+  border: 2px solid #8a8aeb;
   transition: all 0.3s ease-out;
 }

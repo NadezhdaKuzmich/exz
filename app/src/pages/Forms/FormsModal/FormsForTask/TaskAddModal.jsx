@@ -1,21 +1,27 @@
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleModal } from "../../../../slices/ModalSlice";
-import { addTask } from "../../../../slices/BoardsSlice";
-import { Modal, Form, Input, DatePicker } from "antd";
-import { useState } from "react";
+import { addTask } from "../../../../slices/BoardSlice/BoardsSlice";
+import { Modal, Form, Input, DatePicker, Select } from "antd";
+import { tagRender } from "./tagRender";
 import dayjs from "dayjs";
 const { TextArea } = Input;
 
-const TaskAddModal = ({ column }) => {
-  const { isOpenAddTask } = useSelector((store) => store.modal);
-  const InitialValue = {
-    title: "",
-    description: "",
-    timeLimit: "",
-  };
+const InitialValue = {
+  title: "",
+  description: "",
+  timeLimit: "",
+};
 
+const TaskAddModal = ({ column }) => {
+  const { userList } = useSelector((store) => store.user);
+  const { isOpenAddTask } = useSelector((store) => store.modal);
   const [state, setState] = useState(InitialValue);
+  const [selectedItems, setSelectedItems] = useState([]);
   const { title, description, timeLimit } = state;
+  const usersName = userList.map(user => user.username);
+  const users = usersName.filter((user) => !selectedItems.includes(user));
+
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -42,6 +48,7 @@ const TaskAddModal = ({ column }) => {
         description: description,
         statusName: column,
         timeLimit: timeLimit,
+        responsible: selectedItems,
       })
     );
     setState(InitialValue);
@@ -118,6 +125,30 @@ const TaskAddModal = ({ column }) => {
               style={{ width: "100%" }}
               showTime={{ defaultValue: dayjs("00:00:00", "HH:mm:ss") }}
               onChange={handleDataSet}
+            />
+          </Form.Item>
+          <Form.Item
+            name="responsible"
+            rules={[
+              {
+                required: true,
+                message: "Select responsible for realization",
+              },
+            ]}
+          >
+            <Select
+              mode="multiple"
+              size="large"
+              virtual={false}
+              placeholder="Select responsible for realization"
+              value={selectedItems}
+              onChange={setSelectedItems}
+              tagRender={tagRender}
+              style={{ width: "100%" }}
+              options={users.map((item) => ({
+                value: item,
+                label: item,
+              }))}
             />
           </Form.Item>
         </Form>

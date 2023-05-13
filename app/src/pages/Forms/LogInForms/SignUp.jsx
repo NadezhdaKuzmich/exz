@@ -1,3 +1,6 @@
+import { useDispatch } from "react-redux";
+import { register } from "../../../slices/AuthSlice/AuthSlise";
+import { useNavigate } from "react-router-dom";
 import {
   UserAddOutlined,
   UserOutlined,
@@ -5,15 +8,19 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 import { Button, Form, Input, Avatar } from "antd";
-import "./Forms.modules.css";
+import styles from "./Forms.module.css";
 
 const SignUp = () => {
-  // const onFinish = (values) => {
-  //   console.log("Received values of form: ", values);
-  // };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onFinish = (values) => {
+    dispatch(register(values))
+    navigate("/user");
+  };
 
   return (
-    <div className="form-container sign-up">
+    <div className={`${styles.form} ${styles.signUp}`}>
       <h2>Sign Up</h2>
       <Avatar
         size={54}
@@ -22,17 +29,15 @@ const SignUp = () => {
       />
       <Form
         autoComplete="off"
-        className="login-form"
+        className={styles.login}
         layout="vertical"
-        onFinish={(values) => {
-          console.log({ values });
-        }}
+        onFinish={onFinish}
         onFinishFailed={(error) => {
           console.log({ error });
         }}
       >
         <Form.Item
-          name="fullName"
+          name="username"
           label="Full Name"
           rules={[
             {
@@ -49,7 +54,7 @@ const SignUp = () => {
             size="large"
             placeholder="Type your name"
             autoComplete="username"
-            prefix={<UserOutlined className="site-form-item-icon" />}
+            prefix={<UserOutlined className={styles.icon} />}
           />
         </Form.Item>
 
@@ -68,7 +73,7 @@ const SignUp = () => {
         >
           <Input
             size="large"
-            prefix={<MailOutlined className="site-form-item-icon" />}
+            prefix={<MailOutlined className={styles.icon} />}
             autoComplete="email"
             placeholder="Type your email"
           />
@@ -81,20 +86,14 @@ const SignUp = () => {
             {
               required: true,
             },
-            { min: 6 },
-            // {
-            //   validator: (_, value) =>
-            //     value && value.includes("A")
-            //       ? Promise.resolve()
-            //       : Promise.reject("Password does not match criteria."),
-            // },
+            { min: 8 },
           ]}
           style={{ marginBottom: "14px" }}
           hasFeedback
         >
           <Input.Password
             size="large"
-            prefix={<LockOutlined className="site-form-item-icon" />}
+            prefix={<LockOutlined className={styles.icon} />}
             autoComplete="new-password"
             placeholder="Type your password"
           />
@@ -124,7 +123,7 @@ const SignUp = () => {
         >
           <Input.Password
             size="large"
-            prefix={<LockOutlined className="site-form-item-icon" />}
+            prefix={<LockOutlined className={styles.icon} />}
             autoComplete="new-password"
             placeholder="Confirm your password"
           />

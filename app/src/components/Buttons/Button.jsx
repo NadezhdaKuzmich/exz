@@ -1,11 +1,11 @@
 import React from 'react';
-import './Button.modules.css';
+import styles from './Button.module.css';
 import { Link } from 'react-router-dom';
 
-const Button = () => {
+const Button = (props) => {
   return (
     <Link to='/sign-in'>
-      <button className='btn'>Sign In</button>
+      <button className={`${styles.btn} ${props.hide}`}>{props.text}</button>
     </Link>
   );
 }

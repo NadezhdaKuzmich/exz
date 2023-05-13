@@ -1,0 +1,104 @@
+.column {
+  height: fit-content;
+  border-radius: 8px;
+  box-shadow: 2px 6px 8px #9496ad7a;  
+  backdrop-filter: blur(16px);
+  background: #ffffffde;
+  overflow: hidden;
+}
+
+.header {
+  color: #fff;
+  padding: 10px 10px 7px;
+}
+
+.header span {
+  color: #fff;
+}
+
+.todo {
+  background: #b8c3ff;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(45deg, #7785e3, #ffffff);
+  border-image-slice: 1;
+}
+
+.inprogress {
+  background: #adc4ff;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(45deg, #7fadf6, #e9f0fe);
+  border-image-slice: 1;
+}
+
+.done {
+  background: #9cd9d4;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(45deg, #77c1ab, #dfeeef);
+  border-image-slice: 1;
+}
+
+.overdue {
+  background: #ffbcbc;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(45deg, #ff9595, #facfd0d9);
+  border-image-slice: 1;
+  padding: 10px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon {
+  margin-right: 8px;
+}
+
+.taskWrap {
+  padding: 10px 5px 8px;
+}
+
+.taskBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.tasksList {
+  display: flex;
+  min-height: 132px;
+  max-height: 497px;
+  overflow: auto;
+  flex-direction: column;
+  padding: 0 0 8px;
+  gap: 10px;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-btn.ant-btn-lg.taskBtn {
+  color: #8e96da;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-btn-text:not(
+    :disabled
+  ).taskBtn:hover {
+  color: #4276c3;
+  background: #e0ecff;
+}
+
+.taskBtn {
+  text-align: left;
+  color: #ced0da;
+}
+
+.header span.activeSearch {
+  color: #657997;
+}
+
+.hide {
+  display: none;
+}
+
+.column {
+  min-width: 220px;
+  transform: rotateX(180deg);
+}

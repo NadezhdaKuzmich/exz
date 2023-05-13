@@ -5,14 +5,23 @@ import {
   CheckCircleOutlined,
   DeleteOutlined,
   EditOutlined,
-  ExclamationCircleOutlined
+  ExclamationCircleOutlined,
 } from "@ant-design/icons";
-import { deleteTask } from "../../../../slices/BoardsSlice";
+import { deleteTask } from "../../../../slices/BoardSlice/BoardsSlice";
 import { toggleModal } from "../../../../slices/ModalSlice";
-import "./DetailsTask.modules.css";
 
-const DetailsTask = ({ id, title, date, description, status, limit }) => {
+const DetailsTask = ({
+  id,
+  title,
+  date,
+  description,
+  status,
+  limit,
+  responsible,
+}) => {
   const { isOpenDetailsTask } = useSelector((store) => store.modal);
+  const { boards } = useSelector((state) => state.boards);
+  const board = boards.find((board) => board.isActive === true);
   const dispatch = useDispatch();
 
   const chooseTag = (status) => {
@@ -31,13 +40,13 @@ const DetailsTask = ({ id, title, date, description, status, limit }) => {
             done
           </Tag>
         );
-        case "overdue":
-          return (
-            <Tag icon={<ExclamationCircleOutlined />} color="error">
+      case "overdue":
+        return (
+          <Tag icon={<ExclamationCircleOutlined />} color="error">
             warning
           </Tag>
-          );
-  
+        );
+
       default:
         return false;
     }
@@ -77,11 +86,28 @@ const DetailsTask = ({ id, title, date, description, status, limit }) => {
         <Descriptions.Item label="Status" labelStyle={{ color: "#6f738c" }}>
           {chooseTag(status)}
         </Descriptions.Item>
+        <Descriptions.Item label="Author" labelStyle={{ color: "#6f738c" }}>
+          <p className="descript">{board ? board.author : null}</p>
+        </Descriptions.Item>
         <Descriptions.Item label="Date" labelStyle={{ color: "#6f738c" }}>
           <span className="date">{new Date(date).toLocaleString()}</span>
         </Descriptions.Item>
         <Descriptions.Item label="Deadline" labelStyle={{ color: "#6f738c" }}>
           <span className="date">{new Date(limit).toLocaleString()}</span>
+        </Descriptions.Item>
+        <Descriptions.Item
+          label="Responsible"
+          labelStyle={{ color: "#6f738c" }}
+        >
+          {responsible ? (
+            <div>
+              {responsible.map((user, i) => (
+                <Tag color="geekblue" key={i}>
+                  {user}
+                </Tag>
+              ))}
+            </div>
+          ) : "not assigned"}
         </Descriptions.Item>
         <Descriptions.Item
           label="Description"

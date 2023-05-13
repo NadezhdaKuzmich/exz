@@ -1,12 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
 import { toggleModal } from "../../../../slices/ModalSlice";
-import { addBoard, setBoardActive } from "../../../../slices/BoardsSlice";
+import { addBoard, setBoardActive } from "../../../../slices/BoardSlice/BoardsSlice";
 import { nanoid } from "@reduxjs/toolkit";
 import { Form, Modal, Input } from "antd";
 import { useState } from "react";
 
 const BoardModal = () => {
   const { isOpenAddBoard } = useSelector((store) => store.modal);
+  const { user } = useSelector((store) => store.user);
   const [name, setName] = useState("");
   const dispatch = useDispatch();
   const [form] = Form.useForm();
@@ -15,7 +16,7 @@ const BoardModal = () => {
     const id = nanoid();
     if (name.trim().length) {
       dispatch(setBoardActive({ id }));
-      dispatch(addBoard({ id: id, name: name }));
+      dispatch(addBoard({ id: id, name: name, author: user.username }));
       dispatch(toggleModal({ modal: "isOpenAddBoard" }));
       form.resetFields();
     }
